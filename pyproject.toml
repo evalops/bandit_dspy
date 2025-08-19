@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bandit_dspy"
+version = "0.0.1"
+authors = [
+  { name="EvalOps, Inc.", email="hello@evalops.com" },
+]
+description = "A library to integrate Bandit and DSPy for security-aware LLM development."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "dspy-ai",
+    "bandit",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/evalops/bandit_dspy"
+"Bug Tracker" = "https://github.com/evalops/bandit_dspy/issues"

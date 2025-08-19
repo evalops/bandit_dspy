@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: bandit_dspy
+Version: 0.0.1
+Summary: A library to integrate Bandit and DSPy for security-aware LLM development.
+Author-email: "EvalOps, Inc." <hello@evalops.com>
+Project-URL: Homepage, https://github.com/evalops/bandit_dspy
+Project-URL: Bug Tracker, https://github.com/evalops/bandit_dspy/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: dspy-ai
+Requires-Dist: bandit
+Dynamic: license-file
+
+# bandit_dspy
+
+A library to integrate Bandit and DSPy for security-aware LLM development.

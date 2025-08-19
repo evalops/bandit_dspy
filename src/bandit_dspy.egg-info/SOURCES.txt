@@ -1,0 +1,9 @@
+LICENSE
+README.md
+pyproject.toml
+src/bandit_dspy/__init__.py
+src/bandit_dspy.egg-info/PKG-INFO
+src/bandit_dspy.egg-info/SOURCES.txt
+src/bandit_dspy.egg-info/dependency_links.txt
+src/bandit_dspy.egg-info/requires.txt
+src/bandit_dspy.egg-info/top_level.txt
