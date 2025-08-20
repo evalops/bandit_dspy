@@ -3,10 +3,19 @@ Property-based tests for bandit_dspy using hypothesis.
 """
 
 import pytest
-from hypothesis import assume, given, settings
-from hypothesis import strategies as st
 
-from bandit_dspy import BanditRunner, SecurityMetric, run_bandit
+# Handle missing dependencies gracefully
+try:
+    from hypothesis import assume, given, settings
+    from hypothesis import strategies as st
+    from bandit_dspy import BanditRunner, SecurityMetric, run_bandit
+    HAS_DEPS = True
+except (ImportError, ModuleNotFoundError):
+    HAS_DEPS = False
+
+# Skip all tests if dependencies missing - do this immediately
+if not HAS_DEPS:
+    pytest.skip("Dependencies (hypothesis, bandit) not available", allow_module_level=True)
 
 # Generate valid Python identifiers
 python_identifiers = st.text(

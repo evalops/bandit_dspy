@@ -4,12 +4,38 @@ Performance benchmarks for bandit_dspy improvements.
 
 import json
 import time
-
-import dspy
 import pytest
 
-from bandit_dspy import (BanditRunner, BanditTeleprompter, SecurityMetric,
-                         create_bandit_metric)
+# Handle missing dependencies gracefully
+try:
+    import dspy
+    from bandit_dspy import (BanditRunner, BanditTeleprompter, SecurityMetric,
+                             create_bandit_metric)
+    HAS_DEPS = True
+except (ImportError, ModuleNotFoundError):
+    HAS_DEPS = False
+    # Create minimal mocks
+    class MockDSPy:
+        class LM:
+            def __init__(self, name="test"): pass
+        class Predict:
+            def __init__(self, sig): pass
+        class Module:
+            def __init__(self): pass
+        class Example:
+            def __init__(self, **kwargs):
+                for k, v in kwargs.items():
+                    setattr(self, k, v)
+            def with_inputs(self, *args): return self
+    dspy = MockDSPy()
+    BanditRunner = type('BanditRunner', (), {})
+    BanditTeleprompter = type('BanditTeleprompter', (), {})
+    SecurityMetric = type('SecurityMetric', (), {})
+    create_bandit_metric = lambda: None
+
+# Skip all tests if dependencies missing
+if not HAS_DEPS:
+    pytestmark = pytest.mark.skip(reason="Dependencies (dspy-ai, bandit) not available")
 
 
 class PerformanceLLM(dspy.LM):

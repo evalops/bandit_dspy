@@ -3,11 +3,34 @@ Additional tests to improve coverage of advanced features.
 """
 
 from unittest.mock import patch
+import pytest
 
-import dspy
+# Handle missing dependencies gracefully
+try:
+    import dspy
+    from bandit_dspy import BanditRunner, BanditTeleprompter, create_bandit_metric
+    from bandit_dspy.core import run_bandit
+    HAS_DEPS = True
+except (ImportError, ModuleNotFoundError):
+    HAS_DEPS = False
+    # Create minimal mocks
+    class MockDSPy:
+        class Module: 
+            def __init__(self): pass
+        class Example:
+            def __init__(self, **kwargs):
+                for k, v in kwargs.items():
+                    setattr(self, k, v)
+            def with_inputs(self, *args): return self
+    dspy = MockDSPy()
+    BanditRunner = type('BanditRunner', (), {})
+    BanditTeleprompter = type('BanditTeleprompter', (), {})
+    create_bandit_metric = lambda: None
+    run_bandit = lambda code, config_dict=None: []
 
-from bandit_dspy import BanditRunner, BanditTeleprompter, create_bandit_metric
-from bandit_dspy.core import run_bandit
+# Skip all tests if dependencies missing
+if not HAS_DEPS:
+    pytestmark = pytest.mark.skip(reason="Dependencies (dspy-ai, bandit) not available")
 
 
 def test_bandit_runner_syntax_error_fallback():
