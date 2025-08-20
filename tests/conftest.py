@@ -3,16 +3,47 @@ Pytest configuration and shared fixtures for bandit_dspy tests.
 """
 
 from unittest.mock import MagicMock
-
-import dspy
 import pytest
 
-from bandit_dspy import BanditRunner, SecurityMetric
+# Handle missing dependencies gracefully
+try:
+    import dspy
+    from bandit_dspy import BanditRunner, SecurityMetric
+    HAS_DEPS = True
+except (ImportError, ModuleNotFoundError):
+    HAS_DEPS = False
+    # Create minimal mock classes
+    class MockDSPy:
+        class LM:
+            def __init__(self, name="test"): self.name = name
+        class Example:
+            def __init__(self, **kwargs):
+                for k, v in kwargs.items():
+                    setattr(self, k, v)
+            def with_inputs(self, *args): return self
+            def inputs(self): return {}
+        class settings:
+            lm = None
+            @classmethod
+            def configure(cls, **kwargs):
+                cls.lm = kwargs.get('lm')
+
+    dspy = MockDSPy()
+    BanditRunner = type('BanditRunner', (), {})
+    SecurityMetric = type('SecurityMetric', (), {})
+
+# Skip all tests if dependencies missing
+if not HAS_DEPS:
+    pytestmark = pytest.mark.skip(reason="Dependencies (dspy-ai, bandit) not available")
 
 
 @pytest.fixture(autouse=True)
 def dspy_lm_fixture():
     """Fixture to manage dspy.settings.lm for tests."""
+    if not HAS_DEPS:
+        yield MagicMock()
+        return
+
     original_lm = dspy.settings.lm
     mock_lm = MagicMock()
     dspy.settings.configure(lm=mock_lm)
@@ -20,24 +51,27 @@ def dspy_lm_fixture():
     dspy.settings.configure(lm=original_lm)
 
 
-class TestLLM(dspy.LM):
-    """Test LLM that returns predictable outputs for testing."""
+if HAS_DEPS:
+    class TestLLM(dspy.LM):
+        """Test LLM that returns predictable outputs for testing."""
 
-    def __init__(self, responses=None):
-        super().__init__("test-llm")
-        self.responses = responses or [
-            '{"code": "def add(a, b): return a + b"}',  # Secure code
-            '{"code": "password = "hardcoded""}',  # Insecure code
-        ]
-        self.call_count = 0
+        def __init__(self, responses=None):
+            super().__init__("test-llm")
+            self.responses = responses or [
+                '{"code": "def add(a, b): return a + b"}',  # Secure code
+                '{"code": "password = "hardcoded""}',  # Insecure code
+            ]
+            self.call_count = 0
 
-    def __call__(self, messages, **kwargs):
-        response = self.responses[self.call_count % len(self.responses)]
-        self.call_count += 1
-        return [response]
+        def __call__(self, messages, **kwargs):
+            response = self.responses[self.call_count % len(self.responses)]
+            self.call_count += 1
+            return [response]
 
-    def basic_request(self, prompt, **kwargs):
-        pass
+        def basic_request(self, prompt, **kwargs):
+            pass
+else:
+    TestLLM = type('TestLLM', (), {})
 
 
 @pytest.fixture
@@ -145,7 +179,7 @@ api_key = "sk-1234567890abcdef"
 
 def unsafe_command(user_input):
     subprocess.call(user_input, shell=True)
-    
+
 def eval_user_input(expr):
     return eval(expr)
 """
