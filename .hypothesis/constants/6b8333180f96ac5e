@@ -1,0 +1,4 @@
+# file: /Users/jonathanhaas/bandit_dspy/src/bandit_dspy/core.py
+# hypothesis_version: 6.138.2
+
+[1000, '.py', '<generated_code>', 'bandit', 'file', 'w']

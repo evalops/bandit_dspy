@@ -1,0 +1,4 @@
+# file: /Users/jonathanhaas/bandit_dspy/src/bandit_dspy/metric.py
+# hypothesis_version: 6.138.2
+
+[0.1, 1.0, 2.0, 3.0, 'HIGH', 'LOW', 'MEDIUM', 'issue_counts', 'issues', 'lines_of_code', 'score', 'total_penalty']

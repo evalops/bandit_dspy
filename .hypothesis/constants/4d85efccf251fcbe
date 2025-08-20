@@ -1,0 +1,4 @@
+# file: /Users/jonathanhaas/bandit_dspy/src/bandit_dspy/teleprompter.py
+# hypothesis_version: 6.138.2
+
+[0.1, 0.2, 0.8, 'bayesian', 'genetic', 'mipro', 'random', 'score']
