@@ -382,7 +382,7 @@ class SecurityGEPAOptimizer:
             )
 
             print(
-                f"  Best Security Score: {best_candidate.scores.get('security_score', 0):.3f}"
+                f"  Best Security Score: {best_candidate.scores.get('security_score', 0) if best_candidate.scores is not None else 0:.3f}"
             )
             print(f"  Pareto Front Size: {len(self.pareto_selector.pareto_front)}")
 

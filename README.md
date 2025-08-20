@@ -252,6 +252,25 @@ teleprompter = BanditTeleprompter(
 )
 ```
 
+### Direct Bandit Configuration
+
+```python
+from bandit_dspy import BanditTeleprompter
+
+# Configure Bandit directly via BanditTeleprompter
+# This will apply the configuration to the default security metric
+teleprompter = BanditTeleprompter(
+    bandit_config={
+        "skip": ["B101"], # Skip B101 (hardcoded password) checks
+        "severity_threshold": "MEDIUM" # Only consider MEDIUM and HIGH severity issues
+    },
+    optimization_method="random"
+)
+
+# Compile and use as usual
+# compiled_program = teleprompter.compile(student, trainset=trainset)
+```
+
 ### Performance Monitoring
 
 ```python

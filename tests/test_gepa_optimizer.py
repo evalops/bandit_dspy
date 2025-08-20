@@ -17,7 +17,7 @@ try:
     )
     from bandit_dspy.gepa_optimizer import GEPACandidate, SecurityReflection
     HAS_DEPS = True
-except (ImportError, ModuleNotFoundError) as e:
+except (ImportError, ModuleNotFoundError) as e: # type: ignore
     HAS_DEPS = False
     # Create minimal mock classes to prevent test collection failures
     class MockDSPy:
@@ -35,13 +35,13 @@ except (ImportError, ModuleNotFoundError) as e:
             def inputs(self): return {}
     
     dspy = MockDSPy()
-    SecurityGEPAOptimizer = type('SecurityGEPAOptimizer', (), {})
-    GEPATeleprompter = type('GEPATeleprompter', (), {})
-    SecurityReflector = type('SecurityReflector', (), {})  
-    ParetoSelector = type('ParetoSelector', (), {})
-    GEPACandidate = type('GEPACandidate', (), {})
-    SecurityReflection = type('SecurityReflection', (), {})
-    create_bandit_metric = lambda: None
+    SecurityGEPAOptimizer = type('SecurityGEPAOptimizer', (), {}) # type: ignore
+    GEPATeleprompter = type('GEPATeleprompter', (), {}) # type: ignore
+    SecurityReflector = type('SecurityReflector', (), {}) # type: ignore
+    ParetoSelector = type('ParetoSelector', (), {}) # type: ignore
+    GEPACandidate = type('GEPACandidate', (), {}) # type: ignore
+    SecurityReflection = type('SecurityReflection', (), {}) # type: ignore
+    create_bandit_metric = lambda: None # type: ignore
 
 # Skip all tests if dependencies missing
 if not HAS_DEPS:

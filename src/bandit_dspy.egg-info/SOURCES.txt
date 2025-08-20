@@ -3,6 +3,7 @@ README.md
 pyproject.toml
 src/bandit_dspy/__init__.py
 src/bandit_dspy/core.py
+src/bandit_dspy/gepa_optimizer.py
 src/bandit_dspy/metric.py
 src/bandit_dspy/teleprompter.py
 src/bandit_dspy.egg-info/PKG-INFO
@@ -10,7 +11,10 @@ src/bandit_dspy.egg-info/SOURCES.txt
 src/bandit_dspy.egg-info/dependency_links.txt
 src/bandit_dspy.egg-info/requires.txt
 src/bandit_dspy.egg-info/top_level.txt
+tests/test_advanced_coverage.py
 tests/test_core.py
 tests/test_metric.py
+tests/test_performance.py
+tests/test_property_based.py
 tests/test_teleprompter.py
 tests/test_teleprompter_optimization.py
