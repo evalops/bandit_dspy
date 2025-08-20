@@ -11,7 +11,7 @@ except (ImportError, ModuleNotFoundError):
     # Create minimal mocks
     class MockDSPy:
         class Signature: pass
-        class Module: 
+        class Module:
             def __init__(self): pass
         class Predict:
             def __init__(self, sig): pass

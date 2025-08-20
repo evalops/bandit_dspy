@@ -15,7 +15,7 @@ except (ImportError, ModuleNotFoundError):
     HAS_DEPS = False
     # Create minimal mocks
     class MockDSPy:
-        class Module: 
+        class Module:
             def __init__(self): pass
         class Example:
             def __init__(self, **kwargs):

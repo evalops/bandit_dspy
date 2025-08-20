@@ -27,7 +27,7 @@ except (ImportError, ModuleNotFoundError):
             @classmethod
             def configure(cls, **kwargs):
                 cls.lm = kwargs.get('lm')
-    
+
     dspy = MockDSPy()
     BanditRunner = type('BanditRunner', (), {})
     SecurityMetric = type('SecurityMetric', (), {})
@@ -43,7 +43,7 @@ def dspy_lm_fixture():
     if not HAS_DEPS:
         yield MagicMock()
         return
-        
+
     original_lm = dspy.settings.lm
     mock_lm = MagicMock()
     dspy.settings.configure(lm=mock_lm)
@@ -179,7 +179,7 @@ api_key = "sk-1234567890abcdef"
 
 def unsafe_command(user_input):
     subprocess.call(user_input, shell=True)
-    
+
 def eval_user_input(expr):
     return eval(expr)
 """
